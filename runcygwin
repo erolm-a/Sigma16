@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# bash script to launch Sigma16 from source, using cygwin and ghc
+# Usage: cd Sigma16-i.j.k; ./runSigma16
+
+# The cygpath program converts /cygdrive/c/... to C://...  On windows,
+# use dos2unix to fix the end-of-line characters; otherwise, blank
+# lines give errors and $thisDirectory contains \r
+
+echo "Launching Sigma16 from source..."
+thisDirectory=$(cygpath -aw `pwd`)
+echo "Using as installation directory: $thisDirectory"
+cd src/haskell
+runghc Main $thisDirectory
+echo "finished"

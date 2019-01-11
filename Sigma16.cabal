@@ -1,0 +1,49 @@
+name:		  Sigma16
+version:	  2.3.65
+author:		  John T. O'Donnell
+copyright:	  Copyright (c) 2017 John T. O'Donnell
+license: 	  GPL
+
+cabal-version:    >= 1.6
+
+synopsis:	  computer architecture for research and teaching
+
+description: Sigma16 is a simple 16-bit instruction set architecture,
+                  specified using the Hydra functional hardware
+                  description language. It is suitable for research
+                  and teaching in computer systems and computer
+                  architecture.  This application provides a complete
+                  environment for experimenting with Sigma16,
+                  including an assembler, linker, emulator, and an
+                  integrated development environment (IDE).  There is
+                  a digital circuit that implements the architecture,
+                  which can be simulated using Hydra.  Machine
+                  language programs can run on both the emulator and
+                  the circuit.
+
+category:         hardware
+stability:        experimental
+license-file:     LICENSE.txt
+homepage:         http://www.dcs.gla.ac.uk/~jtod/Hydra/
+package-URL:      http://www.dcs.gla.ac.uk/~jtod/Hydra/Sigma16
+maintainer:       john.odonnell@glasgow.ac.uk
+
+build-type:       Custom
+tested-with:      GHC == 8.0.1
+
+data-files:       Sigma16.cabal
+
+executable Sigma16
+  hs-source-dirs: src/haskell
+  main-is:        Main.hs
+  build-depends:  base >= 4,
+                  transformers >= 0.3 && < 0.6,
+                  mtl>=2.2,
+                  threepenny-gui,
+                  directory >= 1.0,
+                  filepath >= 1.3,
+                  process >= 1.1,
+                  deepseq,
+                  parsec >= 3.0 && <5,
+                  bytestring
+

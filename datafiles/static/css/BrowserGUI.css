@@ -1,0 +1,760 @@
+/* Style for Sigma16 browser GUI */
+
+/* Define logical names for parameters to make it easier to achieve
+   consistency and to adjust the appearance */
+
+:root {
+/* Dimensions */
+    --initial-sys-container-width: 950px;  /* 36em; */
+    /* determines initial width of system and doc sections */
+/* Text */
+    --h1-color: blue;
+    --text-font-family: "Calibri", sans-serif;
+    --text-font-size: 17px;
+    --label-font-family:  "Calibri", sans-serif;
+    --sec-label-font-size:  0.95em;
+    --label-font-size:  0.90em;
+    --hex-font-family: "Lucida Console", Monaco, monospace;
+    --hex-font-size: 0.7em;
+    --asm-listing-font-family: "Lucida Console", Monaco, monospace;
+    --asm-listing-font-size: 12pt;  /* 0.8em; */
+    --html-text-color: white; /* ivory; */
+/* Borders */
+    --outer-border-color: blue;
+    --wrapper-border: 1px solid blue;  /* 1px solid red; */
+    --help-border-color: red;
+/* Content areas */
+/* Backgrounds */
+    --main-system-container-color: beige; /* gray; */
+    --top-section-background: aquamarine; /* fuchsia; */
+    --body-background-color: white; /* ivory; */
+    --hex-background-color: white;
+    --popup-message-background-color: red;
+    --help-text-background:  taupe; 
+    --sec-background: ivory; /* beige; */
+    --top-button-div-background: #f1f1f1#;
+    --pane-button-background: ivory; /* beige; */
+/* Active widgets */
+    --pane-button-hover-color: yellow;
+    --pane-button-active-color: #ccc;
+}
+
+/*
+Some alternative choices
+Fonts
+  "Consolas"  monospace font, where zero has a slash across it
+Colors
+  light green #73AD21;
+ */
+
+/* Try to make the resize handle visible and easy to grab */
+/* The following suggestion on stack overflow doesn't work:
+::-webkit-resizer {
+resizer {
+  border: 2px solid black;
+  background: red;
+  box-shadow: 0 0 5px 5px blue;
+  outline: 2px solid yellow;
+}
+*/
+
+/* Here's another solution offered on stack overflow, taken from
+   http://jsfiddle.net/MM94f/ and on stack overflow at
+   https://stackoverflow.com/questions/13126917/can-i-style-the-resize-grabber-of-textarea
+
+Here is the html:
+(Begin html
+<div class="wrap">
+    <div class="pull-tab"></div>
+    <textarea placeholder="drag the cyan triangle..."></textarea>
+</div>
+End html)
+
+Here is the css:
+(Begin css
+textarea {
+    position: relative;
+    margin: 20px 0 0 20px;
+    z-index: 1;
+}
+.wrap {
+    position: relative;
+    display: inline-block;
+}
+.wrap:after {
+    content:"";
+    border-top: 20px solid black;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    -webkit-transform: rotate(-45deg);
+    z-index: 1;
+    opacity: 0.5;
+    position: absolute;
+    right: -18px;
+    bottom: -3px;
+    pointer-events: none;
+}
+.pull-tab {
+    height: 0px;
+    width: 0px;
+    border-top: 20px solid cyan;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    -webkit-transform: rotate(-45deg);
+    position: absolute;
+    bottom: 0px;
+    right: -15px;
+    pointer-events: none;
+    z-index: 2;
+}
+End css)
+
+*/
+
+button {
+    margin-top: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+
+/* Main layout of the viewport */
+
+.FullScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background: var(--outer-border-color); /* Provides a border */
+}
+
+/* The popup container is normally hidden, but when made visible, it
+   sits on top of the FullScreen */
+
+/* toggle this class to show or hide the popup */
+/* No, instead I'm using .style.display = "block" or .style.disply =
+   "none"
+.popup .show {
+    visibility: visible;
+}
+*/
+
+#PopupMessage {
+    position: absolute;
+    z-index: 1;  /* on top of everything else */
+    top: 100px;
+    left: 80px;
+    width: 700px;
+    height: 200px;
+    overflow: auto;
+    background-color: var(--popup-message-background-color);
+}    
+
+#ProvisionalPathText {
+    width: 100%;
+    background-color: var(--html-text-color);
+}
+
+
+#FileChooser, #ModSelPopup, #BreakpointPopup {
+    position: absolute;
+    z-index: 1;  /* on top of everything else */
+    top: 5%;
+    left: 10%;
+    right: 10%;
+    bottom: 5%;
+    overflow: auto;
+    background-color: beige;
+    border-style: outset;
+    border-radius: 1em;
+    border-width: thick;
+    border-color: red;
+    box-sizing: border-box;
+    padding-top: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+}    
+
+#FileDirDisplay {
+    top: 1em;
+    left: 5em;
+    right: 5em;
+    height: 18em;
+    overflow: auto;
+    border: 2px solid blue;
+    background-color: var(--html-text-color);
+}
+
+#FileChooserPreviewArea {
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--html-text-color);
+    width: 100%;
+    height: 7em;
+    overflow: auto;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 0px;
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+}
+
+/* The top section contains buttons to select various panes, to access
+   help, and to quit or reload the program */
+
+.TopSection {
+    position: fixed;  /* always same place in the visible window */
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    height: 30px;
+    overflow: auto;
+    background: var(--top-section-background);
+}
+
+/* The central section displays the content.  It's divided into two
+   sections: the main system section on the left, and the
+   documentation section on the right.  */
+
+.CentralSection{
+    display: grid; /* container for system and documentation */
+    grid-gap: 8px;
+    position: fixed; /* always same place in the visible window */
+    top: 40px;  /* leave space for the top section */
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    overflow: auto; /* scrollbar if window is too small */
+    background: beige; /* blue; */
+}
+
+/* The MainSystemContainer is on the left side of the page, and it
+   holds the panes showing the system.  Only one pane is visible at a
+   time. */
+
+.MainSystemContainer {
+/* The main system sits to the left of the user manual panel; it can
+   be resized, allowing the full window viewport to be divided in any
+   proportion between it and the documentation.  The main system
+   section is organized into panes (assembler, emulator, etc.) and
+   only one pane is displayed at any time. */
+    grid-row: 1;
+    grid-column: 1;
+    resize: horizontal;
+    width: var(--initial-sys-container-width);
+      /* This will change as resize handle is moved.
+         The initial setting width here makes all the system panes
+         have the same size, without needing the user to move
+         the resize handle */
+    right: 5px;
+    height: auto; /* copied from .HelpSection, seems to do nothing */
+    top: 40px; /* leave room for the top section buttons */
+    left: 5px;
+    bottom: 5px;
+    overflow: auto;
+    background: var(--main-system-container-color);
+}
+
+.MainSystemSection {
+    position: relative;
+    top: 2px;
+    left: 25px;
+    right: 25px;
+    bottom: 25px;
+    overflow: auto;
+    background: green;
+}
+
+.HelpSection{
+    grid-row: 1;
+    grid-column: 2;
+    minimum-width: 100px;
+    height: auto; /* was removed */
+    top: 65px;
+    right: 5px;
+    bottom: 5px;
+    overflow: auto;
+    background: var(--html-text-color);
+    border-style: solid;
+    border-color: var(--help-border-color);
+    border-width: medium;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+}
+
+/*
+.WelcomePane, .EditorPane, .AsmPane,
+.LinkerPane, .ProcPane, .LogPane, DevPane { */
+.SystemPane {
+    box-sizing: border-box;
+    overflow: auto;
+    background: beige; /* ivory; */ /* cyan; */
+    position: relative;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.TextEntry {
+    box-sizing: border-box;
+    background: pink;
+    width: 100%;
+}
+
+
+#EdTextArea, #LnkTextArea,
+.BottomTextArea {
+    position: relative;
+    top: 3px;
+    width: 100%;  /* automatically expand horizontally */
+    box-sizing: border-box;
+    resize: none; /* vertical resize done by adjustTextArea */
+    overflow: auto;
+    background: beige;
+}
+
+/* These are resized with autoAdjustDivHeight */
+#AsmTextArea, #ProcAsmListing {
+    top: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    overflow: auto;
+    font-family: var(--asm-listing-font-family);
+    font-size: var(--asm-listing-font-size);
+    background: var(--hex-background-color);
+    height: 4em; /* default, to be overridden by adjustDivHeight */
+}
+/* ProcAsmListing: "position: relative;" messes it up */
+
+#ProcIOtext {
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--html-text-color);
+/*    rows: 15;
+    columns: 30; */
+/*    width: 20em;
+    height: 10em; */
+    overflow: auto;
+    border-style: solid;
+    border-color: black;
+    border-width: thin;
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 2px;
+}
+
+/*
+.AsmListingTextArea {
+    height: auto;
+    width: 100%;
+    background: ivory;
+    padding: 3px;
+    border: 1px solid red;
+    margin: 3px;
+}
+*/
+
+/* more experimental options for #EdTextArea
+    margin-top: 10px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    height: 100%;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+*/
+    
+.EdButtons {
+    grid-row: 1;
+    grid-column: 1;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background: purple;
+}
+
+.EdMainArea {
+    grid-row: 2;
+    grid-column: 1;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background: purple;
+}
+
+.HelpText{
+    position: absolute;
+    background: var(--help-text-background);
+}
+
+body {
+    background-color: var(--body-background-color);
+    font-family: var(--text-font-family);
+    font-size: var(--text-font-size);
+    line-height: 110%;
+}
+
+p {
+    line-height: 1.5;
+}
+
+h1 {
+    color: var(--h1-color);
+    font-family: "Arial", Sans-serif;
+    font-size: 1.3em;
+}
+
+h2 {
+    color: var(--h1-color);
+    font-family: "Arial", Sans-serif;
+    font-size: 1.1em;
+}
+
+/* Style the tabs for selecting panes */
+
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: var(--top-button-div-background);
+}
+
+/* Style the tab buttons */
+.tablinks {
+    background-color: var(--pane-button-background);
+    float: left;
+    border: 1px solid black;
+    outline: none;
+    cursor: pointer;
+    padding: 2px 12px;
+/*    transition: 0.9s; */
+}
+
+/* Change background of tab buttons on hover */
+div.tab button:hover {
+    background-color: var(--pane-button-hover-color);
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: var(--pane-button-active-color);
+}
+
+.top-control-button {
+    background-color: ivory; /*pink; */
+    float: right;
+    border: 1px solid black;
+    outline: none;
+    cursor: pointer;
+    padding: 2px 12px;
+/*    transition: 0.9s; */
+}
+
+Layout {
+    width: 100%;
+}
+
+#ProcIOtext {
+    grid-row: 1;
+    grid-column: 1;
+    width: 15em;
+    height: 15em;
+    font-family: var(--label-font-family);
+    font-size: var(--label-font-size);
+    overflow: auto;
+}
+
+#ProcInputBuffer {
+    grid-row: 2;
+    grid-column: 1;
+    width: 15em;
+    height: 4em;
+    font-family: var(--label-font-family);
+    font-size: var(--label-font-size);
+    overflow: auto;
+}
+
+/* Processor */
+
+.ProcListingTextArea {
+    height: auto;
+    width: 100%;
+    background: var(--html-text-color);
+    padding: 3px;
+    border: var(--wrapper-border);
+    margin: 3px;
+}
+
+
+.CtlRegWrapper {
+    display: grid;
+    height: auto;
+    /*    width: 80px; */
+    width: 4em;
+    border: var(--wrapper-border);
+    padding: 0.2em;
+    margin-left: 5px;
+    margin-right: 5px;
+/*    grid-template-columns: 30px 40px; */
+    grid-gap: 0.1em;
+    background-color: var(--html-text-color);
+    color: black;
+}
+
+ 
+#InstrRegWrapper, #SegWrapper, #IntWrapper, #EmuWrapper {
+    display: grid;
+    height: auto;
+    width: 5em;
+    border: var(--wrapper-border);
+    padding: 0.2em;
+    margin-left: 5px;
+    margin-right: 5px;
+    grid-gap: 0.1em;
+    background-color: var(--html-text-color);
+    color: black;
+}
+
+#IOWrapper {
+    height: auto;
+    border: var(--wrapper-border);
+    padding: 0.2em;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #e6ffe6;
+             /* aquamarine; var(--html-text-color); */
+    color: black;
+}
+
+.CenterLabel {
+    text-align: center;
+}
+
+.DecodeWrapper {
+    display: grid;
+    height: auto;
+    width: 300px;
+    border: var(--wrapper-border);
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    grid-template-columns: 60px 200px;
+    grid-gap: 8px;
+    background-color:  var(--html-text-color); /* SeaShell; */
+    color: black;
+}
+
+
+/* Formatting labels */
+.RegLabel, .DecLabel {
+    font-family: var(--label-font-family);
+    font-size: var(--label-font-size);
+    margin-right: auto;
+    margin-left: 0px;
+}
+
+/* Individual registers in the register file use the same font family
+   and size as the register contents, to achieve a neat and compact
+   layout */
+
+.RFregLabel {
+    font-family: var(--label-font-family);
+    font-size: var(--hex-font-size);
+    margin-right: auto;
+    margin-left: 0px;
+}
+
+.RegVal, .DecVal {
+    font-family: var(--hex-font-family);
+    font-size: var(--hex-font-size);
+    box-sizing: border-box;
+    border: 1px solid black;
+    background: var(--hex-background-color);
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 0px;
+    margin-bottom: 1px;
+}
+
+.ProcSectionLabel  {
+    font-family: var(--label-font-family);
+    font-size: var(--sec-label-font-size);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Grid positions */
+
+#CtlRegLabel, #InstructionDecodeLabel,
+#SegLabel, #IntLabel, #EmuLabel {
+    grid-row: 1;
+    grid-column: 1 / 3;
+}
+/*
+#OutputLabel {
+    grid-row: 1;
+    grid-column: 1;
+}
+#ProcIOtext {
+    grid-row: 2;
+    grid-column: 1;
+}
+#InputLabel {
+    grid-row: 3;
+    grid-column: 1;
+}
+*/
+
+.Panel {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    height: 110px;
+    width: 120px;
+    background-color: powderblue;
+    color: blue;
+    border-style: ridge;
+}
+
+.RegFile {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    height: auto;
+    width: 4em;
+    background-color: var(--html-text-color);
+                    /* var(--sec-background); */
+    color: black;
+    border-style: ridge;
+}
+
+.box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+}
+
+
+.CtlRegistersGrid {
+    display: grid;
+    grid-template-columns: 30px 50px;
+    grid-gap: 5px;
+    width: 85px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid blue;
+}
+
+.CtlInstructionGrid {
+    display: grid;
+    grid-template-columns: 80px 120px;
+    grid-gap: 5px;
+    width: 215px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid blue;
+}
+
+.Normal {
+    background: yellow;
+}
+
+/* indicate a modified value that should be highlighted */
+.FE {
+    color: blue;
+}
+
+/* indicate a modified value that should be highlighted */
+.MO {
+    color: red;
+}
+
+/* indicate current assembly line that should be highlighted */
+.ASMCU {
+    color: red;
+}
+
+/* indicate output text in the I/O buffer */
+.OT {
+    color: blue;
+    font-family: var(--hex-font-family);
+    font-size: var(--asm-listing-font-size);
+}
+
+#MemViews {
+    display: grid;
+    grid-template-colums: 120px 350px;
+/*    height: 300px; */
+    grid-gap: 5px;
+    padding: 3px;
+    border: 1px solid blue;
+}
+
+.MemView {
+    font-family: var(--hex-font-family);
+    font-size: var(--hex-font-size);
+    width: 110px;
+    height: 300px;
+    overflow: scroll;
+    padding: 5px;
+    background-color: var(--html-text-color); /* beige; */
+    border: 1px solid blue;
+}
+
+.valueField {
+    border: 1px solid green;
+    padding: 2px;
+    background-color: beige;
+}

@@ -1,0 +1,134 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title> Sigma16 Index </title>
+    <link type="text/css" rel="stylesheet"
+          href="src/docsrc/style.css">
+  </head>
+  <body>
+    <h1> Sigma16 </h1>
+    <p> Sigma16 is a computer architecture designed for research and
+      teaching in computer systems.  This application provides a
+      complete environment for experimenting with the architecture,
+      including an editor, assembler, linker, emulator, and an
+      integrated development environment.  There is a digital circuit
+      that implements the architecture, which is specified using the
+      Hydra functional hardware description language.  Hydra can
+      simulate the circuit, and machine language programs can run on
+      both the emulator and the circuit. </p>
+
+    <p> Quick start: launch <b> Sigma16.exe </b> and visit
+      <b> <a href="http://localhost:8023">
+          http://localhost:8023 </a> </b> in your browser. </p>
+
+    <h3> Running the application </h3>
+    <p> You need to start two programs: the Sigma16 application, and a
+      web browser.  The application runs as an independent process,
+      and it uses the browser to display the graphical user interface.
+      The software runs on Windows, Macintosh, and Linux, and
+      currently it works with Chrome and Firefox.  Unzip the
+      installation file and enter the directory.  To run the
+      application you need to do two things: </p>
+    <ol>
+      <li> Launch the program, using any one of the following
+        methods: </li>
+      <ul>
+        <li> Run the executable file: click <b> Sigma16.exe </b> </li>
+        <li> If there is no executable file, run the program from
+          source: enter <b>bash run</b> in a shell. (If you're using
+          cygwin, then enter bash runcygwin.) </li>
+        <li> You can compile the program. </li>
+        <li> The program requires several files to be present, and it
+        needs to be able to find them.  If it fails to find the
+        required files, the symptom is that the GUI will repeatedly
+        start, fail, and restart. </li>
+        <li> See Installing the Software below, and the User Guide,
+        for more details. </li>
+      </ul>
+      <li> Open the GUI in a browser. </li>
+      <ul>
+        <li> Visit the following address in your browser, either
+        Chrome or Firefox:
+          <a href="http://localhost:8023">
+            http://localhost:8023 </a> </li>
+        <li> If you get an error on your browser, something like
+          <em> This site can't be reached, localhost refused to
+            connect</em>, that means the program isn't running.
+          Launch it and the web page should connect. </li>
+        <li> The application assumes a fairly wide browser window, and
+          it displays the User Guide to the right of the architecture
+          display.  If the browser window isn't wide enough, the
+          documentation will not be visible. </li>
+      </ul>
+    </ol>
+
+    <h3> Documentation </h3>
+    <ul>
+      <li> The User Guide is displayed in the running
+        application </li>
+      <li> Without launching the program, you can read the User Guide
+        as <a href="datafiles/doc/html/index.html"> html </a> or
+        alternatively as <a href="src/docsrc/index.txt"> plain
+        text </a>
+      </li>
+    </ul>
+
+    <h3> Using the software </h3>
+    <ul>
+      <li> <em> Refreshing. </em> The processor pane has a Refresh
+      button which redraws the display.  If you refresh the browser
+      window (a little circle with an arrow beside the URL entry),
+      this will restart the application, which is probably not what
+      you want. </li>
+      <li> <em> Finding your files. </em> The best place to keep your
+        assembly language programs is in the Documents folder.  Create
+        a folder in your Documents directory called Sigma16programs,
+        and save your programs there.  Then when you launch Sigma16,
+        go to the editor pane, click Open, and in the Open dialogue
+        click Documents.  It should show a list of directories
+        including Sigma16programs; click that and then the exercise
+        file, then click Open Selected File.  Let me know if it works,
+        or if you're still having problems. </li>
+    </ul>
+
+    <h3> Installing the software </h3>
+    <p> The Sigma16 directory may be either a <em>source
+        distribution</em> or a <em>compiled distribution</em>
+      (sometimes called a "binary"). </p>
+
+    <ul>
+      <li> A compiled distribution contains an executable program.  On
+        Windows this is Sigma16.exe.  You can run the application by
+        launching that executable file. For this to work, the
+        executable needs to be the right kind for your operating
+        system. </li>
+      <li> If you don't have an executable program, or if it doesn't
+        match your operating system, you can run the application from
+        the source. </li>
+      <li> There are two ways to run Sigma16 from a source
+        distribution: you can compile it (using ghc), or you can run
+        it from the source program (using ghci).  Either way, you need
+        to have the Haskell Platform installed, and it needs to be the
+        May 2016 release (containing compiler version ghc-8.0.1).
+        This is available
+        from <a href="https://www.haskell.org/platform/prior.html">
+        https://www.haskell.org/platform/prior.html </a> </li>
+      <li> The program can be compiled using the following commands:
+        <pre>
+          ghc --version      (should be 8.0.1)
+          cabal update
+          cabal configure
+          cabal build
+          cabal install
+          Sigma16
+        </pre>
+      </li>
+      <li> To run from source: open a shell and enter the command bash
+        run (if you're using cygwin on Windows, enter bash
+        runcygwin). It will run more slowly than a compiled version
+        but is likely to be fast enough. </li>
+    </ul>
+</ul>
+</body>
+</html>

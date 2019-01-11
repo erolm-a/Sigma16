@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# bash script to launch Sigma16 from source
+# Usage: bash run or ./run
+
+echo "Launching Sigma16 from source..."
+thisDirectory=`pwd`
+echo "Using as installation directory: $thisDirectory"
+cd src/haskell
+runghc Main $thisDirectory
+echo "finished"
