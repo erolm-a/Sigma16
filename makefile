@@ -105,7 +105,7 @@ clean :
 very-clean :
 	make clean
 	rm -rf datafiles/doc
-	rm -f Sigma16.exe
+	rm -f Sigma16*
 
 # make archive-tarball -- create a tgz file of the entire
 # Sigma16-i.j.k directory and place it in the archive directory.  See
