@@ -60,7 +60,7 @@ compile :
 	cabal configure
 	make doc
 	cabal build
-	mv -f dist/build/Sigma16/Sigma16* .
+	mv -f dist/build/Sigma16/Sigma16 .
 
 # A console window will open; putStr output will appear on that, which
 # is useful for debugging and development but distracting for users.

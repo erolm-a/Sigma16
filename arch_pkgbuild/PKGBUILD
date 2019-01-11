@@ -1,8 +1,8 @@
 pkgname="sigma16"
 pkgdesc="Sigma16 is a 16-bit computer architecture with a regular ISA officially developed and used at the University of Glasgow"
-pkgver=r1.b0c1d91
+pkgver=r2.2e0cc0a
 pkgrel=1
-arch=("any")
+arch=('i686' 'x86_64' 'aarch64' 'armv7h')
 license=("GPL")
 depends=("pandoc" "ghc")
 makedepends=("git" "cabal-install")
@@ -19,29 +19,33 @@ pkgver() {
 
 build() {
     cd "$pkgname"
-    echo "[*] Please make sure cabal uses dynamically-loaded settings"
-    echo  [*] For farther information, see \"https://wiki.archlinux.org/index.php/haskell#Problems_with_linking\"
-    echo "[*] Installing threepenny-gui"
-    cabal install threepenny-gui
-    echo "[*] Threepenny-gui installed"
-    pwd
-    ls
-    read
+    echo "[*] Making a sandboxed installation"
+    echo "[*] To avoid that, just comment the lines \"cabal sandbox init/delete\" in this PKGBUILD file"
+    cabal sandbox init
+    echo "[*] Installing the dependencies"
+    cabal install
+    echo "[*] Starting to compile Sigma16"
     make
-    echo  "[*] Make final execution script"
-
+    echo  "[*] Make final launcher script"
     cat << EOF > launcher.sh
 #!/bin/sh
 
-(cd /usr/share/sigma16 && exec sigma16)
+cd /usr/share/sigma16
+./Sigma16 &
+xdg-open "http://127.0.0.1:8023"
 EOF
+    echo "[*] Cleanup"
+    cabal sandbox delete
 }
 
 package() {
-    cd $pkgdir
-    mkdir -p "urs/bin"
-    mkdir -p "usr/share/sigma16"
-    mv "$srcdir/datafiles" "usr/share/sigma16/datafiles"
-    mv "$srcdir/Sigma16" "usr/share/sigma16"
-    mv "$srcdir/launcher.sh" "usr/bin/sigma16"
+    cd $pkgname
+
+    install -d "$pkgdir/usr/share/sigma16/datafiles"    
+    install -d "$pkgdir/usr/bin"
+
+    install -D index.html "$pkgdir/usr/share/sigma16"
+    cp -r datafiles "$pkgdir/usr/share/sigma16/"
+    install -D Sigma16 "$pkgdir/usr/share/sigma16"
+    install -D launcher.sh "$pkgdir/usr/bin/sigma16"
 }
