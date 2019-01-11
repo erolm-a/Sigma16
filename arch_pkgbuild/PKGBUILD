@@ -1,0 +1,47 @@
+pkgname="sigma16"
+pkgdesc="Sigma16 is a 16-bit computer architecture with a regular ISA officially developed and used at the University of Glasgow"
+pkgver=r1.b0c1d91
+pkgrel=1
+arch=("any")
+license=("GPL")
+depends=("pandoc" "ghc")
+makedepends=("git" "cabal-install")
+#options=(!emptydirs)
+url="https://github.com/erolm-a/$pkgname"
+source=("git+$url")
+#install=$pkgname.install
+sha256sums=("SKIP")
+
+pkgver() {
+    cd "$pkgname"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "$pkgname"
+    echo "[*] Please make sure cabal uses dynamically-loaded settings"
+    echo  [*] For farther information, see \"https://wiki.archlinux.org/index.php/haskell#Problems_with_linking\"
+    echo "[*] Installing threepenny-gui"
+    cabal install threepenny-gui
+    echo "[*] Threepenny-gui installed"
+    pwd
+    ls
+    read
+    make
+    echo  "[*] Make final execution script"
+
+    cat << EOF > launcher.sh
+#!/bin/sh
+
+(cd /usr/share/sigma16 && exec sigma16)
+EOF
+}
+
+package() {
+    cd $pkgdir
+    mkdir -p "urs/bin"
+    mkdir -p "usr/share/sigma16"
+    mv "$srcdir/datafiles" "usr/share/sigma16/datafiles"
+    mv "$srcdir/Sigma16" "usr/share/sigma16"
+    mv "$srcdir/launcher.sh" "usr/bin/sigma16"
+}
