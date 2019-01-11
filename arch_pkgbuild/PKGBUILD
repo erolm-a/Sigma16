@@ -23,7 +23,7 @@ build() {
     echo "[*] To avoid that, just comment the lines \"cabal sandbox init/delete\" in this PKGBUILD file"
     cabal sandbox init
     echo "[*] Installing the dependencies"
-    cabal install
+    cabal install --only-dependencies
     echo "[*] Starting to compile Sigma16"
     make
     echo  "[*] Make final launcher script"
